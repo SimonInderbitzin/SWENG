@@ -1,0 +1,1 @@
+Code and examples for Software Engineering (WI/BIT), in the program of study beginning in academic year 2017/2018 (5 ECTS).
