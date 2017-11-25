@@ -1,4 +1,4 @@
-package ch.fhnw.richards.lecture01_JavaFX.buttonClickMVC;
+package ch.fhnw.richards.lecture01_JavaFX.mvc.buttonClick;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

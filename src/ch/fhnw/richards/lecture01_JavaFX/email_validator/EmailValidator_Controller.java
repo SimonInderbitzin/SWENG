@@ -8,17 +8,9 @@ public class EmailValidator_Controller {
         this.model = model;
         this.view = view;
         
-        // With an anonymous class
-        view.txtEmail.textProperty().addListener(
-        		(observable, oldValue, newValue) -> validateEmailAddress(newValue)
-        );
-        
-        // Using a lambda expression
         view.txtEmail.textProperty().addListener(
                 // Parameters of any PropertyChangeListener
-                (observable, oldValue, newValue) -> {
-                    validateEmailAddress(newValue);
-                });
+                (observable, oldValue, newValue) -> validateEmailAddress(newValue) );
     }
     
     private void validateEmailAddress(String newValue) {
