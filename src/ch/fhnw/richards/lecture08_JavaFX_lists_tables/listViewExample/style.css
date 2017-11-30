@@ -1,0 +1,10 @@
+.label {
+	-fx-font-size: 14pt;
+	-fx-alignment: center;
+	-fx-max-width: 99999px;
+}
+
+.root {
+	-fx-padding: 10px;
+	-fx-spacing: 10px;
+}
