@@ -13,7 +13,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -28,11 +34,13 @@ public class App_View extends View<App_Model> {
 	Menu menuFileLanguage;
 	MenuItem menuFileTrain;
 	Menu menuHelp;
+	Slider sliderNumLetters;
+	Button btnGenerate;
+	Text txtGeneratedText;
+	ScrollPane txtScroll;
+	Label lblStatus;
 
 	ServiceLocator sl = ServiceLocator.getServiceLocator();
-
-	Label lblNumber;
-	Button btnClick;
 
 	public App_View(Stage stage, App_Model model) {
 		super(stage, model);
@@ -68,20 +76,30 @@ public class App_View extends View<App_Model> {
 		menuHelp = new Menu(t.getString("program.menu.help"));
 		menuBar.getMenus().addAll(menuFile, menuHelp);
 
-		GridPane root = new GridPane();
-		root.add(menuBar, 0, 0);
+		sliderNumLetters = new Slider(1, 7, 3);
+		sliderNumLetters.setShowTickLabels(true);
+		sliderNumLetters.setMajorTickUnit(1);
+		sliderNumLetters.setMinorTickCount(0);
+		sliderNumLetters.setBlockIncrement(1);
+		sliderNumLetters.setSnapToTicks(true);
+		
+		txtGeneratedText = new Text();
+		txtScroll= new ScrollPane(txtGeneratedText);
+		txtScroll.setId("generatedText");
+		
+		btnGenerate = new Button();
+		lblStatus = new Label();
+		
+		HBox topHBox = new HBox(10, sliderNumLetters, btnGenerate);		
+		VBox topVBox = new VBox(menuBar, topHBox);
 
-		lblNumber = new Label();
-		lblNumber.setText(Integer.toString(model.getValue()));
-		lblNumber.setMinWidth(200);
-		lblNumber.setAlignment(Pos.BASELINE_CENTER);
-		root.add(lblNumber, 0, 1);
-
-		btnClick = new Button();
-		btnClick.setText(t.getString("button.clickme"));
-		btnClick.setMinWidth(200);
-		root.add(btnClick, 0, 2);
-
+		BorderPane root = new BorderPane();
+		root.setTop(topVBox);
+		root.setCenter(txtScroll);
+		root.setBottom(lblStatus);
+		
+		updateTexts();
+		
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
 		return scene;
@@ -96,6 +114,19 @@ public class App_View extends View<App_Model> {
 		menuHelp.setText(t.getString("program.menu.help"));
 
 		// Other controls
-		btnClick.setText(t.getString("button.clickme"));
+		btnGenerate.setText(t.getString("button.generate"));
+		
+		// Update status bar
+		updateStatusBar();
+	}
+	
+	void updateStatusBar() {
+		Translator t = ServiceLocator.getServiceLocator().getTranslator();
+		int numEntries = model.getNumEntries();
+		String status = t.getString("status.entries") + " " + numEntries;
+		if (numEntries > 0) status += "   /   "
+				+ t.getString("status.links") + " " + model.getNumLinks();
+		lblStatus.setText(status);
+		btnGenerate.setDisable(numEntries == 0);
 	}
 }

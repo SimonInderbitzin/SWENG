@@ -1,10 +1,17 @@
 package jabberwocky.letterBased.appClasses;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 import jabberwocky.letterBased.ServiceLocator;
 import jabberwocky.letterBased.abstractClasses.Controller;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.stage.FileChooser;
 import javafx.stage.WindowEvent;
 
 /**
@@ -24,20 +31,36 @@ public class App_Controller extends Controller<App_Model, App_View> {
 		view.menuFileTrain.setOnAction((e) -> train() );
 
 		// register ourselves to listen for button clicks
-		view.btnClick.setOnAction((e) -> buttonClick() );
+		view.btnGenerate.setOnAction((e) -> buttonClick() );
 		
 		serviceLocator = ServiceLocator.getServiceLocator();
 		serviceLocator.getLogger().info("Application controller initialized");
 	}
 	
 	public void train() {
-		
+		FileChooser fileChooser = new FileChooser();
+		File f = fileChooser.showOpenDialog(view.getStage());
+		if (f != null) {		
+			try (BufferedReader in = new BufferedReader(new FileReader(f))) {
+				StringBuffer sb = new StringBuffer();
+				String line = in.readLine();
+				while (line != null) {
+					sb.append(line);
+					sb.append("\n");
+					line = in.readLine();
+				}
+				view.sliderNumLetters.setDisable(true); // Cannot be changed after training
+				int numChars = (int) view.sliderNumLetters.getValue();
+				model.train(numChars, sb.toString());
+				view.updateStatusBar();
+			} catch (Exception e) {
+				serviceLocator.getLogger().severe(e.toString());
+			}			
+		}
 	}
 
 	public void buttonClick() {
-		model.incrementValue();
-		String newText = Integer.toString(model.getValue());
-
-		view.lblNumber.setText(newText);
+		String out = model.generateText();
+		view.txtGeneratedText.setText(out);
 	}
 }
