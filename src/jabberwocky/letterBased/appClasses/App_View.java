@@ -33,6 +33,7 @@ public class App_View extends View<App_Model> {
 	Menu menuFile;
 	Menu menuFileLanguage;
 	MenuItem menuFileTrain;
+	MenuItem menuFileClear;
 	Menu menuHelp;
 	Slider sliderNumLetters;
 	Button btnGenerate;
@@ -72,6 +73,8 @@ public class App_View extends View<App_Model> {
 
 		menuFileTrain = new MenuItem(t.getString("program.menu.file.train"));
 		menuFile.getItems().add(menuFileTrain);
+		menuFileClear = new MenuItem(t.getString("program.menu.file.clear"));
+		menuFile.getItems().add(menuFileClear);
 
 		menuHelp = new Menu(t.getString("program.menu.help"));
 		menuBar.getMenus().addAll(menuFile, menuHelp);
@@ -117,16 +120,17 @@ public class App_View extends View<App_Model> {
 		btnGenerate.setText(t.getString("button.generate"));
 		
 		// Update status bar
-		updateStatusBar();
+		updateStatus();
 	}
 	
-	void updateStatusBar() {
+	void updateStatus() {
 		Translator t = ServiceLocator.getServiceLocator().getTranslator();
 		int numEntries = model.getNumEntries();
 		String status = t.getString("status.entries") + " " + numEntries;
 		if (numEntries > 0) status += "   /   "
 				+ t.getString("status.links") + " " + model.getNumLinks();
 		lblStatus.setText(status);
-		btnGenerate.setDisable(numEntries == 0);
+		btnGenerate.setDisable(numEntries == 0); // Can only be used after training
+		sliderNumLetters.setDisable(numEntries > 0); // Cannot be changed after training
 	}
 }

@@ -29,12 +29,18 @@ public class App_Controller extends Controller<App_Model, App_View> {
 		
 		// register ourselves to listen for menu items
 		view.menuFileTrain.setOnAction((e) -> train() );
+		view.menuFileClear.setOnAction((e) -> clear() );
 
 		// register ourselves to listen for button clicks
 		view.btnGenerate.setOnAction((e) -> buttonClick() );
 		
 		serviceLocator = ServiceLocator.getServiceLocator();
 		serviceLocator.getLogger().info("Application controller initialized");
+	}
+
+	public void clear() {
+		model.clearTrainingData();
+		view.updateStatus();
 	}
 	
 	public void train() {
@@ -49,10 +55,9 @@ public class App_Controller extends Controller<App_Model, App_View> {
 					sb.append("\n");
 					line = in.readLine();
 				}
-				view.sliderNumLetters.setDisable(true); // Cannot be changed after training
 				int numChars = (int) view.sliderNumLetters.getValue();
 				model.train(numChars, sb.toString());
-				view.updateStatusBar();
+				view.updateStatus();
 			} catch (Exception e) {
 				serviceLocator.getLogger().severe(e.toString());
 			}			

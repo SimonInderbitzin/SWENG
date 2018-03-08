@@ -16,5 +16,6 @@
 }
 
 #generatedText {
-  -fx-min-height: 300px;
+  -fx-min-width: 400px;
+  -fx-min-height: 400px;
 }

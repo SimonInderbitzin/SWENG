@@ -37,6 +37,13 @@ public class App_Model extends Model {
 		}
 		return sum;
 	}
+	
+	/**
+	 * This method clears the training data
+	 */
+	public void clearTrainingData() {
+		trainedData = new HashMap<>();
+	}
 
 	/**
 	 * This method accepts a string and (if not yet set) the number of prediction
@@ -146,7 +153,7 @@ public class App_Model extends Model {
 	}
 
 	/**
-	 * A HashEntry combined an integer - the relative frequency - with a following
+	 * A HashEntry combines an integer - the relative frequency - with a following
 	 * character
 	 */
 	private static class HashEntry {
