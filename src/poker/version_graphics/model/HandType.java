@@ -24,7 +24,7 @@ public enum HandType {
         return currentEval;
     }
     
-    private static boolean isOnePair(ArrayList<Card> cards) {
+    public static boolean isOnePair(ArrayList<Card> cards) {
         boolean found = false;
         for (int i = 0; i < cards.size() - 1 && !found; i++) {
             for (int j = i+1; j < cards.size() && !found; j++) {
@@ -34,7 +34,7 @@ public enum HandType {
         return found;
     }
     
-    private static boolean isTwoPair(ArrayList<Card> cards) {
+    public static boolean isTwoPair(ArrayList<Card> cards) {
         // Clone the cards, because we will be altering the list
         ArrayList<Card> clonedCards = (ArrayList<Card>) cards.clone();
 
@@ -53,32 +53,32 @@ public enum HandType {
         return firstPairFound && isOnePair(clonedCards);
     }
     
-    private static boolean isThreeOfAKind(ArrayList<Card> cards) {
+    public static boolean isThreeOfAKind(ArrayList<Card> cards) {
         // TODO        
         return false;
     }
     
-    private static boolean isStraight(ArrayList<Card> cards) {
+    public static boolean isStraight(ArrayList<Card> cards) {
         // TODO        
         return false;
     }
     
-    private static boolean isFlush(ArrayList<Card> cards) {
+    public static boolean isFlush(ArrayList<Card> cards) {
         // TODO        
         return false;
     }
     
-    private static boolean isFullHouse(ArrayList<Card> cards) {
+    public static boolean isFullHouse(ArrayList<Card> cards) {
         // TODO        
         return false;
     }
     
-    private static boolean isFourOfAKind(ArrayList<Card> cards) {
+    public static boolean isFourOfAKind(ArrayList<Card> cards) {
         // TODO        
         return false;
     }
     
-    private static boolean isStraightFlush(ArrayList<Card> cards) {
+    public static boolean isStraightFlush(ArrayList<Card> cards) {
         // TODO        
         return false;
     }
