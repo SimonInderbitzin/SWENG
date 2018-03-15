@@ -3,7 +3,7 @@ package ch.fhnw.richards.lecture01_JavaFX.solutions.webValidator;
 public class WebValidator_Model {
 	protected boolean isValidWebAddress(String newValue) {
 		boolean valid = false;
-		String[] parts = newValue.split("\\.");
+		String[] parts = newValue.split("\\.", -1);
 
 		// check for a numeric address first: 4 parts, each an integer 0 to 255
 		if (parts.length == 4) {

@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import jabberwocky.letterBased.ServiceLocator;
 import jabberwocky.letterBased.abstractClasses.Model;
+import jabberwocky.letterBased.appClasses.dataClasses.*;
 
 /**
  * Copyright 2015, FHNW, Prof. Dr. Brad Richards. All rights reserved. This code
@@ -14,9 +15,7 @@ import jabberwocky.letterBased.abstractClasses.Model;
  * @author Brad Richards
  */
 public class App_Model extends Model {
-	public static final char START_CHAR = 0x01;
-	public static final char END_CHAR = 0x02;
-	private int numChars;
+	private int numUnits;
 	ServiceLocator serviceLocator;
 	private HashMap<String, ArrayList<HashEntry>> trainedData = new HashMap<>();
 
@@ -33,7 +32,7 @@ public class App_Model extends Model {
 		int sum = 0;
 		for (ArrayList<HashEntry> list : trainedData.values()) {
 			for (HashEntry he : list)
-				sum += he.quantity;
+				sum += he.getQuantity();
 		}
 		return sum;
 	}
@@ -51,29 +50,25 @@ public class App_Model extends Model {
 	 * database.
 	 */
 	public void train(int numChars, String data) {
-		if (this.numChars <= 0) this.numChars = numChars;
-		String sequence = Character.toString(START_CHAR);
+		if (this.numUnits <= 0) this.numUnits = numChars;
+		Sequence sequence = new Sequence(BOF_Unit.BOF);
 		for (int i = 0; i < data.length(); i++) {
-			char c = data.charAt(i);
-			trainOneChar(sequence, c);
-			if (sequence.length() < numChars) {
-				sequence = sequence + c;
-			} else {
-				sequence = sequence.substring(1) + c;
-			}
+			CharUnit c = new CharUnit(data.charAt(i));
+			trainOneUnit(sequence, c);
+			sequence.addUnit(c, numChars);
 		}
-		trainOneChar(sequence, END_CHAR);
+		trainOneUnit(sequence, EOF_Unit.EOF);
 	}
 
 	/**
 	 * Add one character to the training data
 	 */
-	private void trainOneChar(String sequence, char c) {
+	private void trainOneUnit(Sequence sequence, TrainingUnit c) {
 		ArrayList<HashEntry> hashEntries = getHashEntries(sequence);
 		boolean found = false;
 		for (HashEntry entry : hashEntries) {
-			if (entry.followingChar == c) {
-				entry.quantity++;
+			if (entry.getFollowingUnit().equals(c)) {
+				entry.incrementQuantity();
 				found = true;
 				break;
 			}
@@ -84,34 +79,28 @@ public class App_Model extends Model {
 	}
 
 	/**
-	 * Generate text using the training data. The generated text does not include
-	 * START_CHAR or END_CHAR
+	 * Generate text using the training data.
 	 */
 	public String generateText() {
 		StringBuffer sb = new StringBuffer();
-		String sequence = Character.toString(START_CHAR);
-		char c = START_CHAR;
-		while (c != END_CHAR) {
-			c = genOneChar(sequence);
-			if (c != END_CHAR) sb.append(c);
-
-			if (sequence.length() < numChars) {
-				sequence = sequence + c;
-			} else {
-				sequence = sequence.substring(1) + c;
-			}
+		Sequence sequence = new Sequence(BOF_Unit.BOF);
+		TrainingUnit t = BOF_Unit.BOF;
+		while (! t.equals(EOF_Unit.EOF)) {
+			t = genOneUnit(sequence);
+			if (! t.equals(EOF_Unit.EOF)) sb.append(t.toString());
+			sequence.addUnit(t, numUnits);
 		}
 		return sb.toString();
 	}
 
 	/**
-	 * This method generates a single character, based on the given sequence
+	 * This method generates a single unit, based on the given sequence
 	 */
-	private char genOneChar(String sequence) {
-		ArrayList<HashEntry> hashEntries = trainedData.get(sequence);
+	private TrainingUnit genOneUnit(Sequence sequence) {
+		ArrayList<HashEntry> hashEntries = trainedData.get(sequence.toString());
 		int totalOptions = sum(hashEntries);
 		int pick = (int) (Math.random() * totalOptions);
-		return pickChar(hashEntries, pick);
+		return pickUnit(hashEntries, pick);
 	}
 	
 	/**
@@ -119,50 +108,36 @@ public class App_Model extends Model {
 	 */
 	private int sum(ArrayList<HashEntry> hashEntries) {
 		int sum = 0;
-		for (HashEntry he : hashEntries) sum += he.quantity;
+		for (HashEntry he : hashEntries) sum += he.getQuantity();
 		return sum;
 	}
 	
 	/**
-	 * Pick a character based on the number given
+	 * Pick a unit based on the number given
 	 */
-	private char pickChar(ArrayList<HashEntry> hashEntries, int pick) {
+	private TrainingUnit pickUnit(ArrayList<HashEntry> hashEntries, int pick) {
 		int sum = 0;
-		char c = ' ';
+		TrainingUnit t = null;
 		for (int i = 0; i < hashEntries.size(); i++) {
 			HashEntry he = hashEntries.get(i);
-			sum += he.quantity;
+			sum += he.getQuantity();
 			if (sum > pick) {
-				c = he.followingChar;
+				t = he.getFollowingUnit();
 				break;
 			}
 		}
-		return c;
+		return t;
 	}
 
 	/**
 	 * This method returns the list of HashEntries for the character-sequence given.
 	 */
-	private ArrayList<HashEntry> getHashEntries(String sequence) {
-		ArrayList<HashEntry> hashEntries = trainedData.get(sequence);
+	private ArrayList<HashEntry> getHashEntries(Sequence sequence) {
+		ArrayList<HashEntry> hashEntries = trainedData.get(sequence.toString());
 		if (hashEntries == null) {
 			hashEntries = new ArrayList<>();
-			trainedData.put(sequence, hashEntries);
+			trainedData.put(sequence.toString(), hashEntries);
 		}
 		return hashEntries;
-	}
-
-	/**
-	 * A HashEntry combines an integer - the relative frequency - with a following
-	 * character
-	 */
-	private static class HashEntry {
-		int quantity;
-		char followingChar;
-
-		private HashEntry(int quantity, char followingChar) {
-			this.quantity = quantity;
-			this.followingChar = followingChar;
-		}
 	}
 }
