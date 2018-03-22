@@ -1,4 +1,4 @@
-package MinimalMessagingExample;
+package ch.fhnw.richards.lecture12.xMinimalMessagingExample;
 
 import java.io.Closeable;
 import java.io.IOException;
