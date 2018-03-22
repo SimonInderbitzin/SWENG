@@ -16,6 +16,10 @@ public class Model extends Thread {
 	private Integer port;
 	private final Logger logger = Logger.getLogger("");
 
+	public Model() {
+		super("ServerSocket");
+	}
+
 	@Override
 	public void run() {
 		try (ServerSocket listener = new ServerSocket(port, 10, null)) {

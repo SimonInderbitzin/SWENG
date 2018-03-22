@@ -15,6 +15,10 @@ import javafx.concurrent.Task;
 public class Model extends Thread {
 	private Integer port;
 	private final Logger logger = Logger.getLogger("");
+	
+	public Model() {
+		super("ServerSocket");
+	}
 
 	@Override
 	public void run() {
