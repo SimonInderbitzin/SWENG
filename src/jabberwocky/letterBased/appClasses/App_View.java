@@ -6,18 +6,20 @@ import java.util.logging.Logger;
 import jabberwocky.letterBased.ServiceLocator;
 import jabberwocky.letterBased.abstractClasses.View;
 import jabberwocky.letterBased.commonClasses.Translator;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -40,6 +42,8 @@ public class App_View extends View<App_Model> {
 	Text txtGeneratedText;
 	ScrollPane txtScroll;
 	Label lblStatus;
+	RadioButton rdoChar;
+	RadioButton rdoWord;
 
 	ServiceLocator sl = ServiceLocator.getServiceLocator();
 
@@ -79,12 +83,21 @@ public class App_View extends View<App_Model> {
 		menuHelp = new Menu(t.getString("program.menu.help"));
 		menuBar.getMenus().addAll(menuFile, menuHelp);
 
+		ToggleGroup mode = new ToggleGroup();
+		rdoChar = new RadioButton(t.getString("radio.char"));
+		rdoChar.setToggleGroup(mode);
+		rdoChar.setSelected(true);
+		rdoWord = new RadioButton(t.getString("radio.word"));
+		rdoWord.setToggleGroup(mode);
+		
 		sliderNumLetters = new Slider(1, 7, 3);
 		sliderNumLetters.setShowTickLabels(true);
 		sliderNumLetters.setMajorTickUnit(1);
 		sliderNumLetters.setMinorTickCount(0);
 		sliderNumLetters.setBlockIncrement(1);
 		sliderNumLetters.setSnapToTicks(true);
+		
+		Region spacer = new Region();
 		
 		txtGeneratedText = new Text();
 		txtScroll= new ScrollPane(txtGeneratedText);
@@ -93,7 +106,8 @@ public class App_View extends View<App_Model> {
 		btnGenerate = new Button();
 		lblStatus = new Label();
 		
-		HBox topHBox = new HBox(10, sliderNumLetters, btnGenerate);		
+		HBox topHBox = new HBox(10, rdoChar, rdoWord, sliderNumLetters, spacer, btnGenerate);
+		HBox.setHgrow(spacer, Priority.ALWAYS);
 		VBox topVBox = new VBox(menuBar, topHBox);
 
 		BorderPane root = new BorderPane();
@@ -117,6 +131,8 @@ public class App_View extends View<App_Model> {
 		menuHelp.setText(t.getString("program.menu.help"));
 
 		// Other controls
+		rdoChar.setText(t.getString("radio.char"));
+		rdoWord.setText(t.getString("radio.word"));
 		btnGenerate.setText(t.getString("button.generate"));
 		
 		// Update status bar
@@ -130,7 +146,12 @@ public class App_View extends View<App_Model> {
 		if (numEntries > 0) status += "   /   "
 				+ t.getString("status.links") + " " + model.getNumLinks();
 		lblStatus.setText(status);
-		btnGenerate.setDisable(numEntries == 0); // Can only be used after training
-		sliderNumLetters.setDisable(numEntries > 0); // Cannot be changed after training
+		// Can only be used after training
+		btnGenerate.setDisable(numEntries == 0); 
+		
+		// Cannot be changed after training
+		sliderNumLetters.setDisable(numEntries > 0); 
+		rdoChar.setDisable(numEntries > 0);
+		rdoWord.setDisable(numEntries > 0);
 	}
 }

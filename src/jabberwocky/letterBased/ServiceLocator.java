@@ -27,10 +27,14 @@ public class ServiceLocator {
     // Supported locales (for translations)
     final private Locale[] locales = new Locale[] { new Locale("en"), new Locale("de") };
 
+    // Modes of operation
+    public static enum Mode { CharacterMode, WordMode };
+    
     // Resources
     private Logger logger;
     private Configuration configuration;
     private Translator translator;
+    private Mode mode;
 
     /**
      * Factory method for returning the singleton
@@ -87,4 +91,12 @@ public class ServiceLocator {
     public void setTranslator(Translator translator) {
         this.translator = translator;
     }
+
+	public Mode getMode() {
+		return mode;
+	}
+
+	public void setMode(Mode mode) {
+		this.mode = mode;
+	}
 }

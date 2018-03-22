@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import jabberwocky.letterBased.ServiceLocator;
+import jabberwocky.letterBased.ServiceLocator.Mode;
 import jabberwocky.letterBased.abstractClasses.Model;
 import jabberwocky.letterBased.appClasses.dataClasses.*;
 
@@ -36,7 +37,7 @@ public class App_Model extends Model {
 		}
 		return sum;
 	}
-	
+
 	/**
 	 * This method clears the training data
 	 */
@@ -45,23 +46,60 @@ public class App_Model extends Model {
 	}
 
 	/**
-	 * This method accepts a string and (if not yet set) the number of prediction
-	 * characters. It then processes the string and adds it to the training
+	 * This method accepts a string and (if not yet set) the amount of data to use
+	 * for prediction. It then processes the string and adds it to the training
 	 * database.
 	 */
-	public void train(int numChars, String data) {
-		if (this.numUnits <= 0) this.numUnits = numChars;
+	public void train(int numUnits, String data) {
+		if (this.numUnits <= 0) this.numUnits = numUnits;
+
+		StringBuffer sb = new StringBuffer(data);
+		cleanData(sb); // Remove excess whitespace
 		Sequence sequence = new Sequence(BOF_Unit.BOF);
-		for (int i = 0; i < data.length(); i++) {
-			CharUnit c = new CharUnit(data.charAt(i));
-			trainOneUnit(sequence, c);
-			sequence.addUnit(c, numChars);
+
+		while (sb.length() > 0) {
+			TrainingUnit tu = parseTrainingUnit(sb);
+			trainOneUnit(sequence, tu);
+			sequence.addUnit(tu, numUnits);
 		}
 		trainOneUnit(sequence, EOF_Unit.EOF);
 	}
 
 	/**
-	 * Add one character to the training data
+	 * Parse one unit from the beginning of the StringBuffer, removing the parsed
+	 * data.
+	 */
+	private TrainingUnit parseTrainingUnit(StringBuffer sb) {
+		TrainingUnit tu = null;
+		if (serviceLocator.getMode() == Mode.CharacterMode) {
+			tu = new CharUnit(sb.charAt(0));
+			sb.deleteCharAt(0);
+		} else if (serviceLocator.getMode() == Mode.WordMode) {
+			String word;
+			// parse out one word, including any punctuation or end-of-line character as
+			// part of the word
+			int posSpace = sb.indexOf(" ");
+			int posEOL = sb.indexOf("\n");
+
+			if (posSpace >= 0 && (posEOL < 0 || posSpace < posEOL)) {
+				// Parse to next space, discarding the space
+				word = sb.substring(0, posSpace);
+				sb.delete(0, posSpace + 1);
+			} else if (posEOL >= 0 && (posSpace < 0 || posEOL < posSpace)) {
+				// Parse to next EOL, including the EOL character
+				word = sb.substring(0, posEOL + 1);
+				sb.delete(0, posEOL + 1);
+			} else { // last word of the file
+				word = sb.toString();
+				sb.delete(0, sb.length());
+			}
+			tu = new WordUnit(word);
+		}
+		return tu;
+	}
+
+	/**
+	 * Add one unit to the training data
 	 */
 	private void trainOneUnit(Sequence sequence, TrainingUnit c) {
 		ArrayList<HashEntry> hashEntries = getHashEntries(sequence);
@@ -85,9 +123,12 @@ public class App_Model extends Model {
 		StringBuffer sb = new StringBuffer();
 		Sequence sequence = new Sequence(BOF_Unit.BOF);
 		TrainingUnit t = BOF_Unit.BOF;
-		while (! t.equals(EOF_Unit.EOF)) {
+		while (!t.equals(EOF_Unit.EOF)) {
 			t = genOneUnit(sequence);
-			if (! t.equals(EOF_Unit.EOF)) sb.append(t.toString());
+			if (!t.equals(EOF_Unit.EOF)) sb.append(t.toString());
+			if (serviceLocator.getMode() == Mode.WordMode) {
+				if (sb.charAt(sb.length() - 1) != '\n') sb.append(" ");
+			}
 			sequence.addUnit(t, numUnits);
 		}
 		return sb.toString();
@@ -102,16 +143,17 @@ public class App_Model extends Model {
 		int pick = (int) (Math.random() * totalOptions);
 		return pickUnit(hashEntries, pick);
 	}
-	
+
 	/**
 	 * Count the total options in the list of HashEntries
 	 */
 	private int sum(ArrayList<HashEntry> hashEntries) {
 		int sum = 0;
-		for (HashEntry he : hashEntries) sum += he.getQuantity();
+		for (HashEntry he : hashEntries)
+			sum += he.getQuantity();
 		return sum;
 	}
-	
+
 	/**
 	 * Pick a unit based on the number given
 	 */
@@ -139,5 +181,23 @@ public class App_Model extends Model {
 			trainedData.put(sequence.toString(), hashEntries);
 		}
 		return hashEntries;
+	}
+
+	/**
+	 * Clean input data in the given StringBuffer, by removing doubled whitespace
+	 * characters, and removing any whitespace at the start or end of the file.
+	 */
+	private void cleanData(StringBuffer sb) {
+		// Remove whitespace at start and end
+		while (sb.length() > 0 && sb.charAt(0) <= 0x20)
+			sb.deleteCharAt(0);
+		while (sb.length() > 0 && sb.charAt(sb.length() - 1) <= 0x20)
+			sb.deleteCharAt(sb.length() - 1);
+
+		// Remove doubled whitespace characters
+		for (int pos = 0; pos < sb.length() - 1; pos++) {
+			while (sb.length() > 1 && sb.charAt(pos) <= 0x20 && sb.charAt(pos) == sb.charAt(pos + 1))
+				sb.deleteCharAt(pos + 1);
+		}
 	}
 }

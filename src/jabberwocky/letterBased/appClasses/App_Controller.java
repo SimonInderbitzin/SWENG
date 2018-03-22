@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import jabberwocky.letterBased.ServiceLocator;
+import jabberwocky.letterBased.ServiceLocator.Mode;
 import jabberwocky.letterBased.abstractClasses.Controller;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -56,6 +57,7 @@ public class App_Controller extends Controller<App_Model, App_View> {
 					line = in.readLine();
 				}
 				int numChars = (int) view.sliderNumLetters.getValue();
+				serviceLocator.setMode(view.rdoChar.isSelected() ? Mode.CharacterMode : Mode.WordMode);
 				model.train(numChars, sb.toString());
 				view.updateStatus();
 			} catch (Exception e) {
