@@ -35,10 +35,13 @@ public class App_Controller extends Controller<App_Model, App_View> {
 		// register ourselves to listen for button clicks
 		view.btnGenerate.setOnAction((e) -> buttonClick() );
 		
+		// control wrapping of generated text
+//		view.btnGenerate.widthProperty()
+		
 		serviceLocator = ServiceLocator.getServiceLocator();
 		serviceLocator.getLogger().info("Application controller initialized");
 	}
-
+	
 	public void clear() {
 		model.clearTrainingData();
 		view.updateStatus();

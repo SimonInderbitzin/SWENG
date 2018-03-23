@@ -17,5 +17,7 @@
 
 #generatedText {
   -fx-min-width: 400px;
+  -fx-max-width: 9999px;
   -fx-min-height: 400px;
+  -fx-max-height: 9999px;
 }

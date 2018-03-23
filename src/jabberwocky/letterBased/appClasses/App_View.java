@@ -15,6 +15,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -39,7 +40,7 @@ public class App_View extends View<App_Model> {
 	Menu menuHelp;
 	Slider sliderNumLetters;
 	Button btnGenerate;
-	Text txtGeneratedText;
+	TextArea txtGeneratedText;
 	ScrollPane txtScroll;
 	Label lblStatus;
 	RadioButton rdoChar;
@@ -99,9 +100,9 @@ public class App_View extends View<App_Model> {
 		
 		Region spacer = new Region();
 		
-		txtGeneratedText = new Text();
-		txtScroll= new ScrollPane(txtGeneratedText);
-		txtScroll.setId("generatedText");
+		txtGeneratedText = new TextArea();
+		txtGeneratedText.setWrapText(true);
+		txtGeneratedText.setId("generatedText");
 		
 		btnGenerate = new Button();
 		lblStatus = new Label();
@@ -112,12 +113,12 @@ public class App_View extends View<App_Model> {
 
 		BorderPane root = new BorderPane();
 		root.setTop(topVBox);
-		root.setCenter(txtScroll);
+		root.setCenter(txtGeneratedText);
 		root.setBottom(lblStatus);
 		
 		updateTexts();
 		
-		Scene scene = new Scene(root);
+		Scene scene = new Scene(root, 800, 800);
 		scene.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
 		return scene;
 	}

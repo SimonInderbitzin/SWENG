@@ -54,7 +54,7 @@ public class App_Model extends Model {
 		if (this.numUnits <= 0) this.numUnits = numUnits;
 
 		StringBuffer sb = new StringBuffer(data);
-		cleanData(sb); // Remove excess whitespace
+		preprocessData(sb); // Remove excess whitespace
 		Sequence sequence = new Sequence(BOF_Unit.BOF);
 
 		while (sb.length() > 0) {
@@ -126,11 +126,9 @@ public class App_Model extends Model {
 		while (!t.equals(EOF_Unit.EOF)) {
 			t = genOneUnit(sequence);
 			if (!t.equals(EOF_Unit.EOF)) sb.append(t.toString());
-			if (serviceLocator.getMode() == Mode.WordMode) {
-				if (sb.charAt(sb.length() - 1) != '\n') sb.append(" ");
-			}
 			sequence.addUnit(t, numUnits);
 		}
+		postprocessData(sb);
 		return sb.toString();
 	}
 
@@ -141,7 +139,8 @@ public class App_Model extends Model {
 		ArrayList<HashEntry> hashEntries = trainedData.get(sequence.toString());
 		int totalOptions = sum(hashEntries);
 		int pick = (int) (Math.random() * totalOptions);
-		return pickUnit(hashEntries, pick);
+		TrainingUnit t = pickUnit(hashEntries, pick);
+		return t;
 	}
 
 	/**
@@ -187,7 +186,7 @@ public class App_Model extends Model {
 	 * Clean input data in the given StringBuffer, by removing doubled whitespace
 	 * characters, and removing any whitespace at the start or end of the file.
 	 */
-	private void cleanData(StringBuffer sb) {
+	private void preprocessData(StringBuffer sb) {
 		// Remove whitespace at start and end
 		while (sb.length() > 0 && sb.charAt(0) <= 0x20)
 			sb.deleteCharAt(0);
@@ -198,6 +197,18 @@ public class App_Model extends Model {
 		for (int pos = 0; pos < sb.length() - 1; pos++) {
 			while (sb.length() > 1 && sb.charAt(pos) <= 0x20 && sb.charAt(pos) == sb.charAt(pos + 1))
 				sb.deleteCharAt(pos + 1);
+		}
+	}
+	
+	/**
+	 * Format the output data for better display, by doubling line-breaks.
+	 */
+	private void postprocessData(StringBuffer sb) {
+		for (int pos = 0; pos < sb.length(); pos++) {
+			if (sb.charAt(pos) == '\n') {
+				sb.insert(pos, '\n');
+				pos++;
+			}
 		}
 	}
 }

@@ -10,6 +10,7 @@ public class WordUnit extends TrainingUnit {
 	
 	@Override
 	public String toString() {
-		return word;
+		String s = (word.charAt(word.length()-1) == '\n') ? word : word + " ";
+		return s;
 	}
 }
