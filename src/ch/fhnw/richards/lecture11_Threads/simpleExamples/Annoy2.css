@@ -1,0 +1,9 @@
+
+.label {
+  -fx-min-width: 100px;
+  -fx-pref-width: 100px;
+  -fx-max-width: 1000px;
+  -fx-min-height: 100px;
+  -fx-pref-height: 100px;
+  -fx-max-height: 1000px;
+}
