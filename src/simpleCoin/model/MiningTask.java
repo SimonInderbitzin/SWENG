@@ -70,10 +70,6 @@ public class MiningTask extends Task<Void> {
 
 					// Add block to the chain
 					blockchain.addNewBlock(block);
-					
-					// Consider adjusting difficulty for this blockchain
-					System.out.println("Should adjust difficulty");
-
 				}
 				
 				// Next block				
@@ -85,7 +81,6 @@ public class MiningTask extends Task<Void> {
 	
 	private void findHashForBlock() {
 		boolean found = false;
-		hashRate.set(0);
 		int hashCounter = 0;
 		long hashStart = System.currentTimeMillis();
 		while (!found && !this.isCancelled()) {

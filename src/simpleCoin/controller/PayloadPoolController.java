@@ -18,6 +18,14 @@ public class PayloadPoolController {
 			PayloadItem item = new Message(view.getTxtMessage().getText());
 			model.addPayloadItem(item);
 		});
+		
+		// Handle "add" events
+		view.getBtnAdd1000().setOnAction((e) -> {
+			for (int i = 0; i < 1000; i++) {
+				PayloadItem item = new Message(view.getTxtMessage().getText());
+				model.addPayloadItem(item);
+			}
+		});
 
 		// Monitor size of pool
 		model.getPayloadPoolSizeProperty().addListener((property, oldValue, newValue) -> {

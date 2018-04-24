@@ -1,5 +1,11 @@
 package simpleCoin.view;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -15,8 +21,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import simpleCoin.model.Block;
+import simpleCoin.model.BlockChain;
 
 public class MiningControlView extends VBox {
+	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 	final String START = "Start";
 	final String STOP = "Stop";
 	Label lblTitle = new Label("Mining Control");
@@ -42,7 +51,7 @@ public class MiningControlView extends VBox {
 		gridInfo.addRow(1, lblLastBlockFound, lblValueLastBlockFound);
 		gridInfo.addRow(2, lblDifficulty, lblValueDifficulty);
 		gridInfo.addRow(3, lblTargetRate, lblValueTargetRate);
-		gridInfo.addRow(4, lblDifficultyAdjust, lblValueDifficultyAdjust);
+		gridInfo.addRow(4, lblDifficultyAdjust, lblValueDifficultyAdjust);		
 
 		this.getChildren().addAll(lblTitle, btnStartStop, gridInfo);
 
@@ -56,7 +65,7 @@ public class MiningControlView extends VBox {
 		Text text = new Text("Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 		text.applyCss();
 		ColumnConstraints cc0 = new ColumnConstraints(text.getLayoutBounds().getWidth());
-		text = new Text("0000000000");
+		text = new Text("0000-00-00 00:00:00");
 		text.applyCss();
 		ColumnConstraints cc1 = new ColumnConstraints(text.getLayoutBounds().getWidth());
 		gridInfo.getColumnConstraints().addAll(cc0, cc1);
@@ -87,4 +96,20 @@ public class MiningControlView extends VBox {
 			lblValueHashrate.setText(Integer.toString(hashRate));
 		});
 	}
+	
+	public void updateNewBlockFound(BlockChain bc) {
+		Platform.runLater(() -> {
+			Block block = bc.getLastBlock();
+			lblValueLastBlockFound.setText(formatBlockTime(block.getBlockHeader().getTimeStamp()));
+			lblValueDifficulty.setText(Long.toString(bc.getCurrentDifficulty()));
+			lblValueTargetRate.setText(BlockChain.TARGET_PERIOD_MS / 1000 + " sec");
+			lblValueDifficultyAdjust.setText(BlockChain.BLOCKS_PER_ADJUSTMENT + " blocks");
+		});
+	}
+	
+	private String formatBlockTime(long ms) {
+		LocalDateTime resultdate = Instant.ofEpochMilli(ms).atZone(ZoneId.systemDefault()).toLocalDateTime();
+		return formatter.format(resultdate);
+	}
+	
 }
