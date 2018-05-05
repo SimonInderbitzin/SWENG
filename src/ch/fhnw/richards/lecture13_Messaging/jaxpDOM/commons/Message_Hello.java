@@ -8,13 +8,13 @@ public class Message_Hello extends Message {
     }
 
 	@Override
-	protected void init(Document docIn) {
+	protected void receiveAttributes(Document docIn) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected void addNodes(Document docIn) {
+	protected void sendAttributes(Document docIn) {
 		// TODO Auto-generated method stub
 		
 	}

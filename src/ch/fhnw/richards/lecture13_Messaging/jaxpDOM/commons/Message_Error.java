@@ -14,7 +14,7 @@ public class Message_Error extends Message {
     }
 
 	@Override
-	protected void init(Document docIn) {
+	protected void receiveAttributes(Document docIn) {
         Element root = docIn.getDocumentElement();
 		
 		NodeList tmpElements = root.getElementsByTagName(ELEMENT_INFO);
@@ -25,7 +25,7 @@ public class Message_Error extends Message {
 	}    
 	
 	@Override
-	protected void addNodes(Document docIn) {
+	protected void sendAttributes(Document docIn) {
         Element root = docIn.getDocumentElement();
 		
 		Element info = docIn.createElement(ELEMENT_INFO);

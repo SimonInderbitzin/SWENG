@@ -71,12 +71,12 @@ public abstract class Message {
     /**
      * Subclasses must fill in their own attributes from a received message
      */
-    protected abstract void init(Document docIn);
+    protected abstract void receiveAttributes(Document docIn);
     
     /**
      * Subclasses must create elements for their attributes in a message to be sent
      */
-    protected abstract void addNodes(Document docIn);
+    protected abstract void sendAttributes(Document docIn);
     
     /**
      * Send this message, as an XML document, over the given socket
@@ -90,7 +90,7 @@ public abstract class Message {
     	// Set the timestamp
     	this.timestamp = System.currentTimeMillis();
     	
-    	// Convert to XML
+    	// Convert current object into an XML String
         String xmlOut = this.toString();
 
         try { // Ignore IO errors
@@ -149,7 +149,7 @@ public abstract class Message {
         }
         
         // Let the subclass read its additional attributes from the document
-        newMessage.init(xmlDocument);
+        newMessage.receiveAttributes(xmlDocument);
         
         return newMessage;
     }
@@ -161,15 +161,31 @@ public abstract class Message {
      */
     @Override
     public String toString() {
-        String xmlOut = null;
+        // Create XML document from the attributes of "this" object
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder builder = docFactory.newDocumentBuilder();
+            this.xmlDocument = builder.newDocument();
+            Element eltMessage = xmlDocument.createElement(ELEMENT_MESSAGE);
+            xmlDocument.appendChild(eltMessage);
+            eltMessage.setAttribute(ATTR_ID, Long.toString(this.id));
+            eltMessage.setAttribute(ATTR_TIMESTAMP, Long.toString(this.timestamp));
+            eltMessage.setAttribute(ATTR_CLIENT, this.client);
+            
+            // Create the <type> attribute
+            MessageType type = MessageType.getType(this);
+            eltMessage.setAttribute(ATTR_TYPE, type.toString());
 
-        buildMessage(); // Create XML document from "this"
+            // Let the subclass add additional nodes, as required
+            this.sendAttributes(this.xmlDocument);
+        } catch (ParserConfigurationException e) {
+        }
 
+        // Transform the XML document into a String
         try { // Ignore all sorts of possible exceptions...
-
             // Set up a transformer that will convert from DOM to XML-text
-            TransformerFactory factory = TransformerFactory.newInstance();
-            Transformer transformer = factory.newTransformer();
+            TransformerFactory tFactory = TransformerFactory.newInstance();
+            Transformer transformer = tFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 
             // Set up the output stream
@@ -186,30 +202,6 @@ public abstract class Message {
 
         }
         return xmlString;
-    }
-    
-    /**
-     * Build an XML document from this message object
-     */
-    private void buildMessage() {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        try {
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            this.xmlDocument = builder.newDocument();
-            Element eltMessage = xmlDocument.createElement(ELEMENT_MESSAGE);
-            xmlDocument.appendChild(eltMessage);
-            eltMessage.setAttribute(ATTR_ID, Long.toString(this.id));
-            eltMessage.setAttribute(ATTR_TIMESTAMP, Long.toString(this.timestamp));
-            eltMessage.setAttribute(ATTR_CLIENT, this.client);
-            
-            // Create the <type> attribute
-            MessageType type = MessageType.getType(this);
-            eltMessage.setAttribute(ATTR_TYPE, type.toString());
-
-            // Let the subclass add additional nodes, as required
-            this.addNodes(this.xmlDocument);
-        } catch (ParserConfigurationException e) {
-        }
     }
 
     // --- Getters and Setters ---
