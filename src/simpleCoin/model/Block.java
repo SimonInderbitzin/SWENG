@@ -42,8 +42,8 @@ public class Block implements Hashable {
 			// and randomly add a couple of further items
 			Payload payload = new Payload();
 			payload.addItem(payloadPool.get(0));
-			for (int i = 1; i < payloadPool.size(); i++) {
-				if (Math.random() < 0.5) payload.addItem(payloadPool.get(i));
+			for (int i = 1; i < payloadPool.size() && Math.random() < 0.5; i++) {
+				payload.addItem(payloadPool.get(i));
 			}
 	
 			return new Block(blockchain, payload);

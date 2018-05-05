@@ -27,6 +27,11 @@ public class MiningController {
 				miner.getHashRateProperty().addListener((property, oldValue, newValue) -> {
 					view.updateHashRate(miner.getHashRate());
 				});
+				
+				// Monitor blockchain for new blocks
+				model.getBlockChain().getBlockChainSizeProperty().addListener((property, oldValue, newValue) -> {
+					view.updateNewBlockFound(model.getBlockChain());
+				});				
 
 				// Watch for task completion or cancellation
 				miner.stateProperty().addListener((property, oldValue, newValue) -> {

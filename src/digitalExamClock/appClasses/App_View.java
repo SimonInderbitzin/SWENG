@@ -1,11 +1,11 @@
-package ch.fhnw.richards.lecture10_JavaAppTemplate.jat_v2.appClasses;
+package digitalExamClock.appClasses;
 
 import java.util.Locale;
 import java.util.logging.Logger;
 
-import ch.fhnw.richards.lecture10_JavaAppTemplate.jat_v2.ServiceLocator;
-import ch.fhnw.richards.lecture10_JavaAppTemplate.jat_v2.abstractClasses.View;
-import ch.fhnw.richards.lecture10_JavaAppTemplate.jat_v2.commonClasses.Translator;
+import digitalExamClock.ServiceLocator;
+import digitalExamClock.abstractClasses.View;
+import digitalExamClock.commonClasses.Translator;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,7 +13,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -28,22 +35,29 @@ public class App_View extends View<App_Model> {
     Menu menuFileLanguage;
     Menu menuHelp;
     
-    Label lblNumber;
-    Button btnClick;
-
+    Label lblStartTime;
+    TextField txtStartTime;
+    Label lblEndTime;
+    TextField txtEndTime;
+    Label lblMainTime;
+    
+    Scene scene;
+    
 	public App_View(Stage stage, App_Model model) {
         super(stage, model);
-        ServiceLocator.getServiceLocator().getLogger().info("Application view initialized");
+        ServiceLocator sl = ServiceLocator.getServiceLocator();
+        sl.getLogger().info("Application view initialized");    
     }
 
 	@Override
 	protected Scene create_GUI() {
 	    ServiceLocator sl = ServiceLocator.getServiceLocator();  
 	    Logger logger = sl.getLogger();
+	    Translator t = sl.getTranslator();
 	    
 	    MenuBar menuBar = new MenuBar();
-	    menuFile = new Menu();
-	    menuFileLanguage = new Menu();
+	    menuFile = new Menu(t.getString("program.menu.file"));
+	    menuFileLanguage = new Menu(t.getString("program.menu.file.language"));
 	    menuFile.getItems().add(menuFileLanguage);
 	    
        for (Locale locale : sl.getLocales()) {
@@ -56,25 +70,38 @@ public class App_View extends View<App_Model> {
             });
         }
 	    
-        menuHelp = new Menu();
+        menuHelp = new Menu(t.getString("program.menu.help"));
 	    menuBar.getMenus().addAll(menuFile, menuHelp);
 		
-		GridPane root = new GridPane();
-		root.add(menuBar, 0, 0);
+		BorderPane root = new BorderPane();
+		root.setTop(menuBar);
+
+		VBox centerBox = new VBox(10);
+		centerBox.setId("root");
+		root.setCenter(centerBox);
 		
-		lblNumber = new Label();
-        lblNumber.setText(Integer.toString(model.getValue()));
-        lblNumber.setMinWidth(200);
-        lblNumber.setAlignment(Pos.BASELINE_CENTER);
-        root.add(lblNumber, 0, 1);
-        
-        btnClick = new Button();
-        btnClick.setMinWidth(200);
-        root.add(btnClick, 0, 2);
-        
-        updateTexts();
+		lblStartTime = new Label();
+		txtStartTime = new TextField("00:00");
+		Region spacer = new Region();
+		lblEndTime = new Label();
+		txtEndTime = new TextField("00:00");
 		
-        Scene scene = new Scene(root);
+		HBox topBox = new HBox(10, lblStartTime, txtStartTime, spacer, lblEndTime, txtEndTime);
+		HBox.setHgrow(spacer, Priority.ALWAYS);
+		topBox.getStyleClass().add("centered");
+		
+		Region r1 = new Region();
+		Region r2 = new Region();
+		lblMainTime = new Label();
+		lblMainTime.setId("clock");
+		
+		centerBox.getChildren().addAll(topBox, r1, lblMainTime, r2);
+		VBox.setVgrow(r1, Priority.ALWAYS);
+		VBox.setVgrow(r2, Priority.ALWAYS);
+		
+		updateTexts();
+		
+        scene = new Scene(root, 400, 300);
         scene.getStylesheets().add(
                 getClass().getResource("app.css").toExternalForm());
         return scene;
@@ -89,7 +116,8 @@ public class App_View extends View<App_Model> {
            menuHelp.setText(t.getString("program.menu.help"));
 	        
 	        // Other controls
-           btnClick.setText(t.getString("button.clickme"));
+           lblStartTime.setText(t.getString("start.time"));
+           lblEndTime.setText(t.getString("end.time"));
            
            stage.setTitle(t.getString("program.name"));
 	    }

@@ -20,11 +20,12 @@ public class PayloadPoolView extends VBox {
 
 	TextField txtMessage = new TextField();
 	Button btnAdd = new Button("Add");
+	Button btnAdd1000 = new Button("Add x 1000");
 	Label lblPending = new Label(0 + STR_PENDING);
 
 	PayloadPoolView() {
 		super();
-		HBox messageRow = new HBox(txtMessage, btnAdd);
+		HBox messageRow = new HBox(txtMessage, btnAdd, btnAdd1000);
 
 		this.getChildren().addAll(lblTitle, messageRow, lblPending);
 
@@ -50,5 +51,9 @@ public class PayloadPoolView extends VBox {
 
 	public Button getBtnAdd() {
 		return btnAdd;
+	}
+
+	public Button getBtnAdd1000() {
+		return btnAdd1000;
 	}
 }
