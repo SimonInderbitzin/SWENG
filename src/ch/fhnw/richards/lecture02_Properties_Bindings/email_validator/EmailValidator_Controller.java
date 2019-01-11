@@ -1,4 +1,4 @@
-package ch.fhnw.richards.lecture01_JavaFX.email_validator;
+package ch.fhnw.richards.lecture02_Properties_Bindings.email_validator;
 
 public class EmailValidator_Controller {    
     final private EmailValidator_Model model;

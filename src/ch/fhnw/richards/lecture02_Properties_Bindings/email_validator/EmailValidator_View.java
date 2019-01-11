@@ -1,4 +1,4 @@
-package ch.fhnw.richards.lecture01_JavaFX.email_validator;
+package ch.fhnw.richards.lecture02_Properties_Bindings.email_validator;
 
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;

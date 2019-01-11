@@ -1,4 +1,4 @@
-package ch.fhnw.richards.lecture01_JavaFX.modelPropertyExample;
+package ch.fhnw.richards.lecture02_Properties_Bindings.modelPropertyExample;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

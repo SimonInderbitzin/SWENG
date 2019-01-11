@@ -1,4 +1,4 @@
-package ch.fhnw.richards.lecture01_JavaFX.solutions.webValidator;
+package ch.fhnw.richards.lecture02_Properties_Bindings.solutions.webValidator;
 
 public class WebValidator_Controller {
 	final private WebValidator_Model model;

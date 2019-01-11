@@ -1,4 +1,4 @@
-package ch.fhnw.richards.lecture01_JavaFX.solutions.webValidator;
+package ch.fhnw.richards.lecture02_Properties_Bindings.solutions.webValidator;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
