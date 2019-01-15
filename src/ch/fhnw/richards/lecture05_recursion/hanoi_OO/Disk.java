@@ -13,8 +13,6 @@ public final class Disk extends Base {
 		this.size = size;
 	}
 
-	// --- Getters and Setters ---
-
 	@Override
 	public void setOnTop(Disk onTop) throws Exception {
 		if (onTop != null && onTop.size >= this.size) {
@@ -27,8 +25,6 @@ public final class Disk extends Base {
 	public String toString() {
 		return "Disk " + size;
 	}
-
-	// --- Getters and Setters ---
 
 	public int getSize() {
 		return size;

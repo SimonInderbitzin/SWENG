@@ -11,8 +11,6 @@ public final class Post extends Base {
 		return "Post " + name;
 	}
 
-	// --- Getters and Setters ---
-
 	public String getName() {
 		return name;
 	}

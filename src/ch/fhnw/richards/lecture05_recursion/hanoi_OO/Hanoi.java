@@ -1,26 +1,26 @@
 package ch.fhnw.richards.lecture05_recursion.hanoi_OO;
 
-import java.util.Scanner;
-
 public class Hanoi {
-	private Post A, B, C;
+	private static final Post A = new Post("A");
+	private static final Post B = new Post("B");
+	private static final Post C = new Post("C");
+	
+	private static final int numDisks = 5; // Change to make problem harder or easier 
 
 	public static void main(String[] args) {
-		Scanner in = new Scanner(System.in);
-		System.out.println("Enter desired number of disks: ");
-		int num = in.nextInt();
-		in.close();
+		Hanoi hanoi = new Hanoi(numDisks);
 		
-		if (num >= 0) {
-			new Hanoi(num);
+		try {
+			System.out.println("Solution steps for " + numDisks + " disks");
+			hanoi.solve(A, B, C);
+			System.out.println("Finished!");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 	}
 
 	public Hanoi(int numDisks) {
-		A = new Post("A");
-		B = new Post("B");
-		C = new Post("C");
-
+		// Put the requested number of disks onto post A
 		Base lastObject = A;
 		for (int i = numDisks; i >= 1; i--) {
 			Disk s = new Disk(i);
@@ -30,14 +30,6 @@ public class Hanoi {
 				System.out.println("Problem setup failed!");
 			}
 			lastObject = s;
-		}
-
-		try {
-			System.out.println("Solution steps for " + numDisks + " disks");
-			this.solve(A, B, C);
-			System.out.println("Finished!");
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
 		}
 	}
 

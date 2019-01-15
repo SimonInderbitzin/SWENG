@@ -9,14 +9,12 @@ package ch.fhnw.richards.lecture05_recursion.hanoi_OO;
 public abstract class Base {
 	private Disk onTop = null;
 
-	// --- Getters and Setters ---
-
 	public Disk getOnTop() {
 		return onTop;
 	}
 
 	public void setOnTop(Disk onTop) throws Exception {
-		// Do not allow placing a disc if a disk is already here
+		// Can only place disks, and only if onTop is not occupied
 		if (this.onTop == null || onTop == null) {
 			this.onTop = onTop;
 		} else {

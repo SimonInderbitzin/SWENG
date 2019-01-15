@@ -2,11 +2,9 @@ package ch.fhnw.richards.lecture05_recursion;
 
 public class IterativeExamples {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-	}
-
-	private static int factorial(int value) {
+	// --- Factorial ---
+	
+	public static int factorial(int value) {
 		int result = 1;
 		for (int factor = 2; factor <= value; factor++) {
 			result *= factor;
@@ -14,29 +12,36 @@ public class IterativeExamples {
 		return result;
 	}
 
-	// -----------------------------------
+	// --- Find string in unsorted array ---
 
-	private static int[] values = { -23, 7, 14, 0, 82, -7 };
-
-	private static int countPositive() {
-		int result = 0;
-		for (int val : values) {
-			if (val > 0)
-				result++;
+	public static boolean find(String search, String[] values) {
+		for (String val : values) {
+			if (val.equals(search)) return true;
 		}
-		return result;
+		return false;
 	}
 
-	// -----------------------------------
+	// --- Find string in sorted array (binary search) ---
+	
+	public static boolean find2(String search, String[] values) {
+		int start = 0;
+		int end = values.length -1;
+		while (start < end) {
+			int middle = (start + end) / 2;
+			int compareResult = search.compareTo(values[middle]);
+			if (compareResult == 0) return true;
+			else if (compareResult < 0) end = middle-1;
+			else start = middle+1;
+		}
+		return false;
+	}
 
-	private static String[] strValues = { "bill", "sue", "ann", "tom" };
+	// --- Count number of positive values in an array - linear ---
 
-	private static boolean find(String search) {
-		boolean result = false;
-		for (String val : strValues) {
-			if (val.equals(search)) {
-				result = true;
-			}
+	public static int countPositive(int[] values) {
+		int result = 0;
+		for (int val : values) {
+			if (val > 0) result++;
 		}
 		return result;
 	}
@@ -44,7 +49,7 @@ public class IterativeExamples {
 	// -----------------------------------
 
 	// We assume A > B. If this cannot be assumed, then we should check
-	private static int GCD(int A, int B) {
+	public static int GCD(int A, int B) {
 		int C = -1;
 		while (C != 0) {
 			C = A % B;
