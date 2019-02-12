@@ -1,6 +1,8 @@
-package ch.fhnw.richards.lecture08_Lambdas.country_v1;
+package ch.fhnw.richards.lecture08_Lambdas.countrySort_v1;
 
 import java.util.Comparator;
+
+import ch.fhnw.richards.lecture08_Lambdas.Country;
 
 /**
  * @author Dieter Holz

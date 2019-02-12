@@ -1,11 +1,10 @@
-package ch.fhnw.richards.lecture08_Lambdas.country_v4;
+package ch.fhnw.richards.lecture08_Lambdas.countrySort_v5_inClassSolution;
 
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.junit.Test;

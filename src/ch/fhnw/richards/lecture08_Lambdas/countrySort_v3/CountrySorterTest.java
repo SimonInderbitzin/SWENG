@@ -1,4 +1,4 @@
-package ch.fhnw.richards.lecture08_Lambdas.country_v2;
+package ch.fhnw.richards.lecture08_Lambdas.countrySort_v3;
 
 import static org.junit.Assert.*;
 
@@ -10,6 +10,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import ch.fhnw.richards.lecture08_Lambdas.Country;
+
 public class CountrySorterTest {
 	List<Country> countries = new ArrayList<>(Arrays.asList(new Country("Schweiz", 41285),
 			new Country("Germany", 357021), new Country("France", 675417), new Country("Italy", 301230),
@@ -18,17 +20,14 @@ public class CountrySorterTest {
 
 	@Test
 	public void test() {
-		Collections.sort(countries, new CountryByAreaComparator());
+		Collections.sort(countries, new Comparator<Country>() {
+			@Override
+			public int compare(Country o1, Country o2) {
+				return Double.compare(o1.getArea(), o2.getArea());
+			}
+		});
 		for (int i = 0; i < countries.size() - 1; i++) {
 			assertTrue(countries.get(i).getArea() <= countries.get(i + 1).getArea());
 		}
 	}
-	
-	public static class CountryByAreaComparator implements Comparator<Country> {
-		@Override
-		public int compare(Country o1, Country o2) {
-			return (int) (o1.getArea() - o2.getArea());
-			//return Double.compare(o1.getArea(), o2.getArea());
-		}
-	}	
 }

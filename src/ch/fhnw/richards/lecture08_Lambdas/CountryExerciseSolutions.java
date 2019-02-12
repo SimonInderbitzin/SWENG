@@ -1,4 +1,4 @@
-package ch.fhnw.richards.lecture08_Lambdas.exercises;
+package ch.fhnw.richards.lecture08_Lambdas;
 
 import static org.junit.Assert.*;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-public class CountryExercises {
+public class CountryExerciseSolutions {
 	static List<Country> countries = new ArrayList<>(Arrays.asList(new Country("Schweiz", 41285),
 			new Country("Germany", 357021), new Country("France", 675417), new Country("Italy", 301230),
 			new Country("Austria", 83858), new Country("Russia", 17098246), new Country("Luxembourg", 2586),
@@ -42,12 +42,22 @@ public class CountryExercises {
 	 * lambda. Then print them using a lambda
 	 */
 	public static void example1() {
+		// List.sort plus lambda
+		countries.sort(Comparator.comparing(c -> c.getName()));
+
+		// Use a lambda to print
+		countries.forEach(c -> System.out.println(c));
 	}
 
 	/**
 	 * Repeat exercise 1, but replace both lambdas with method references
 	 */
 	public static void example2() {
+		// List.sort plus method reference
+		countries.sort(Comparator.comparing(Country::getName));
+
+		// Use a lambda to method reference
+		countries.forEach(System.out::println);
 	}
 
 	/**
@@ -55,6 +65,10 @@ public class CountryExercises {
 	 * can put multiple statements in a lambda.
 	 */
 	public static void example3() {
+		countries.forEach(c -> {
+			if (c.getArea() < 100000)
+				System.out.println(c);
+		});
 	}
 
 	/**
@@ -62,6 +76,11 @@ public class CountryExercises {
 	 * using their natural order, and print using a method reference.
 	 */
 	public static void example4() {
+		// Sort using natural order
+		countries.sort(Comparator.naturalOrder());
+
+		// Use a method reference to print
+		countries.forEach(System.out::println);
 	}
 
 	/**
@@ -70,5 +89,8 @@ public class CountryExercises {
 	 * Sort the new countries by the first two letters (by the abbreviations), then print the countries
 	 */
 	public static void example5() {
+		countries.replaceAll(c -> new Country(c.getName().substring(0, 2).toUpperCase() + ": " + c.getName(), c.getArea()));
+		countries.sort(Comparator.comparing(c -> c.getName().substring(0,2)));
+		countries.forEach(System.out::println);
 	}
 }
