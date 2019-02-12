@@ -1,6 +1,6 @@
-package ch.fhnw.richards.lecture06_Collections.exercises;
+package ch.fhnw.richards.lecture06_Collections.familyArrayExample;
 
-import ch.fhnw.richards.lecture06_Collections.Person;
+import ch.fhnw.richards.lecture06_Collections.jUnit_Demo.Person;
 
 /**
  * This class may contains errors!

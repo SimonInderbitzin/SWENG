@@ -1,38 +1,37 @@
-package ch.fhnw.richards.lecture06_Collections.solutions.array;
+package ch.fhnw.richards.lecture06_Collections.familyArrayExample;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import ch.fhnw.richards.lecture06_Collections.Person;
-import ch.fhnw.richards.lecture06_Collections.exercises.Family;
+import ch.fhnw.richards.lecture06_Collections.jUnit_Demo.Person;
 
-public class FamilyTest {
+public class FamilyTestSolution {
 	private Person fred = new Person("Fred", 1.81, 80);
 	private Person ann = new Person("Ann", 1.6, 55);
 	private Person john = new Person("John", 1.9, 95);
 
 	@Test
-	public void testInitialSize() {
-		Family family = new Family(2); // Setup
-		int size = family.size(); // Actual result
-		assertEquals(0, size); // Expected result
-	}
-
-	@Test
 	public void testSize() {
 		Family family = new Family(2); // Setup
+		assertEquals(0, family.size()); // Should initially be size 0
+		
 		family.add(fred);
-		int size = family.size(); // Actual result
-		assertEquals(1, size); // Expected result
+		assertEquals(1, family.size()); // And now size 1
+		
+		family.add(ann);
+		assertEquals(2, family.size()); // And now size 2
+		
+		family.add(john);
+		assertEquals(2, family.size()); // Still size 2 (capacity exceeded)
 	}
 
 	@Test
 	public void testAdd() {
 		Family family = new Family(2); // Setup
 		family.add(fred);
-		assertTrue(family.isMember(fred)); // Expected result
-		assertFalse(family.isMember(ann));
+		assertTrue(family.isMember(fred)); // Fred should be a member
+		assertFalse(family.isMember(ann)); // But Ann is not
 	}
 
 	@Test
