@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ButtonClickMVC",
+            "request": "launch",
+            "mainClass": "ch.fhnw.richards.lecture01_JavaFX.mvc.buttonClick.ButtonClickMVC",
+            "projectName": "WI_SoftwareEngineering"
+        }
+    ]
+}
