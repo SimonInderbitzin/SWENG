@@ -1,6 +1,6 @@
 Copyright 2017, FHNW, Prof. Dr. Brad Richards All rights reserved.
 
-This license file accompanies the SimpleCoin example developed for my programming classes at the University of Applied Sciences, Northwestern Switzerland.
+This software was developed for my programming classes at the University of Applied Sciences, Northwestern Switzerland. This software is licensed under the 3-Clause BSD License.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 

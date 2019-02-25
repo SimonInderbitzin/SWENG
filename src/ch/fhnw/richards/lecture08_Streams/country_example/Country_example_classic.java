@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Country_example_classic_v1 {
+public class Country_example_classic {
 
 	public static void main(String[] args) {
 		// Get names of small countries
