@@ -16,10 +16,12 @@ public class Model_ClientThread extends Thread {
 	private static int clientNumber = 0;
 	private final Logger logger = Logger.getLogger("");
 	private Socket socket;
+	private String webRoot;
 
-	public Model_ClientThread(Socket socket) {
+	public Model_ClientThread(Socket socket, String webRoot) {
 		super("Client thread" + clientNumber++);
 		this.socket = socket;
+		this.webRoot = webRoot;
 	}
 
 	@Override
@@ -165,8 +167,8 @@ public class Model_ClientThread extends Thread {
      * Examine the incoming request. If it is a GET request, locate and return the requested file
      * name. If the request is not a GET request, or if we have any problems, return null.
      * 
-     * Note: we assume that the root of our web content is a subdirectory "www" underneath the
-     * working directory. Hence: a request for "woof.html" will become "www/woof.html", and a request
+     * If the root of our web content is a subdirectory "www" underneath the
+     * working directory, then a request for "woof.html" will become "www/woof.html", and a request
      * for "/path/to/woof.html" will become "www/path/to/woof.html".
      * 
      * @param request Incoming request read from the client
@@ -177,14 +179,16 @@ public class Model_ClientThread extends Thread {
         
         if (request.regionMatches(0, "GET ", 0, 4)) {
             int fileNameEnd = request.indexOf(" ", 4);
-            fileName = request.substring(4, fileNameEnd);
+            fileName = request.substring(4, fileNameEnd).trim();
         }
         
         if (fileName != null) {
-            if (fileName.charAt(0) == '/') {
-                fileName = "www" + fileName;
+        	if (fileName.length() == 0 || fileName.equals("/")) { // Default document
+        		fileName = webRoot + "/index.html";
+        	} else if (fileName.charAt(0) == '/') {
+                fileName = webRoot + fileName;
             } else {
-                fileName = "www/" + fileName;
+                fileName = webRoot + "/" + fileName;
             }
         }
         return fileName;
