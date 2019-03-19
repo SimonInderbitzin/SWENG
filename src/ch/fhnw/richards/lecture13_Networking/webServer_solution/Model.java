@@ -14,6 +14,7 @@ import javafx.concurrent.Task;
  */
 public class Model extends Thread {
 	private Integer port;
+	private String webRoot = "www";
 	private final Logger logger = Logger.getLogger("");
 
 	public Model() {
@@ -28,7 +29,7 @@ public class Model extends Thread {
 			while (true) {
 				// Wait for request, then create input/output streams to talk to the client
 				Socket socket = listener.accept();
-				Model_ClientThread client = new Model_ClientThread(socket);
+				Model_ClientThread client = new Model_ClientThread(socket, webRoot);
 				client.start();
 			}
 		} catch (Exception e) {
@@ -38,5 +39,9 @@ public class Model extends Thread {
 
 	public void setPort(Integer port) {
 		this.port = port;
+	}
+	
+	public void setWebroot(String webRoot) {
+		this.webRoot = webRoot;
 	}
 }
