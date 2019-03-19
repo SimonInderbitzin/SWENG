@@ -29,14 +29,12 @@ public class RecursiveExamples {
 		if (start > end) return false; // Base case 1
 		
 		int middle = (start + end) / 2;
-		int compareResult = values[middle].compareTo(search);
+		if (values[middle].equals(search)) return true; // Base case 2
 		
-		if (compareResult == 0) return true; // Base case 2
-		
-		if (compareResult > 0) { // recursive case 1
-			return find2(search, values, start, middle - 1);
+		if (values[middle].compareTo(search) > 0) { // recursive case 1
+			return find2(search, values, start, middle - 1); // on the left
 		} else { // recursive case 2
-			return find2(search, values, middle + 1, end);
+			return find2(search, values, middle + 1, end); // on the right
 		}
 	}	
 
