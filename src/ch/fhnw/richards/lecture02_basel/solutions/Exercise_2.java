@@ -29,7 +29,7 @@ public class Exercise_2 extends Application {
 		});
 		
 		Scene scene = new Scene(root, 300, 100);
-		primaryStage.setTitle("Exercise 1");
+		primaryStage.setTitle("Exercise 2");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
