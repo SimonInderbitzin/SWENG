@@ -9,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /**
+ * Our goal is to tie the size of the image to the size of the button.
  * This is an example where a binding is the wrong solution!
  * 
  * Image source: https://commons.wikimedia.org/wiki/File:Kot_Leni.jpg

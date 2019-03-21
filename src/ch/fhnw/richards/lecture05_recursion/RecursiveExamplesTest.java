@@ -17,23 +17,23 @@ class RecursiveExamplesTest {
 	@Test
 	void testCountPositive() {
 		int[] intValues = { -23, 7, 14, 0, 82, -7 };
-		assertEquals(RecursiveExamples.countPositive(intValues), 3);
+		assertEquals(RecursiveExamples.countPositive(intValues, 0), 3);
 	}
 
 	@Test
 	void testFind() {
 		String[] names = { "bill", "sue", "ann", "tom", "frank", "cindy" };
 
-		assertTrue(RecursiveExamples.find("ann", names));
-		assertFalse(RecursiveExamples.find("sam", names));
+		assertTrue(RecursiveExamples.find("ann", names, 0));
+		assertFalse(RecursiveExamples.find("sam", names, 0));
 	}
 	
 	@Test
 	void testFind2() {
 		String[] names = { "ann", "bill", "cindy", "frank", "sue", "tom" };
 
-		assertTrue(RecursiveExamples.find2("ann", names));
-		assertFalse(RecursiveExamples.find2("sam", names));
+		assertTrue(RecursiveExamples.find2("ann", names, 0, names.length-1));
+		assertFalse(RecursiveExamples.find2("sam", names, 0, names.length-1));
 	}
 	
 	@Test
