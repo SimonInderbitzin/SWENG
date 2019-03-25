@@ -180,6 +180,10 @@ public class Model_ClientThread extends Thread {
         if (request.regionMatches(0, "GET ", 0, 4)) {
             int fileNameEnd = request.indexOf(" ", 4);
             fileName = request.substring(4, fileNameEnd).trim();
+            
+            // Sanitize filename
+            fileName = fileName.replaceAll("[^0-9_a-zA-Z\\-\\.]", "");
+            if (fileName.length() > 255) fileName = fileName.substring(0, 255);
         }
         
         if (fileName != null) {
