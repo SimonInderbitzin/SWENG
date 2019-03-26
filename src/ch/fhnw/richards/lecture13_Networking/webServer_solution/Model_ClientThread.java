@@ -104,7 +104,8 @@ public class Model_ClientThread extends Thread {
                 {"jpeg", "image/jpeg"},
                 {"gif", "image/gif"},
                 {"png", "image/png"},
-                {"ico", "image/x-icon"}
+                {"ico", "image/x-icon"},
+                {"svg", "image/svg+xml"}
         };
         
         String mediaType = "application/octet-stream";
@@ -182,7 +183,7 @@ public class Model_ClientThread extends Thread {
             fileName = request.substring(4, fileNameEnd).trim();
             
             // Sanitize filename
-            fileName = fileName.replaceAll("[^0-9_a-zA-Z\\-\\.]", "");
+            fileName = fileName.replaceAll("[^0-9_/a-zA-Z\\-\\.]", "");
             if (fileName.length() > 255) fileName = fileName.substring(0, 255);
         }
         
