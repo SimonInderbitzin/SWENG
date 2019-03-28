@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import ch.fhnw.richards.lecture06_Collections.Person;
+import ch.fhnw.richards.lecture06_Collections.jUnit_Demo.Person;
 
 public class FamilyTest {
 	private Person fred = new Person("Fred", 1.81, 80);
