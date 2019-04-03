@@ -2,7 +2,7 @@ package ch.fhnw.richards.lecture06_Collections.solutions.arraylist;
 
 import java.util.ArrayList;
 
-import ch.fhnw.richards.lecture06_Collections.Person;
+import ch.fhnw.richards.lecture06_Collections.jUnit_Demo.Person;
 
 public class Family {
 	private ArrayList<Person> members;
