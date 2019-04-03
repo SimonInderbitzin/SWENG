@@ -1,4 +1,4 @@
-package ch.fhnw.richards.lecture13_Messaging.plainText.server;
+package ch.fhnw.richards.lecture14_Messaging.plainText.server;
 
 import java.net.ServerSocket;
 import java.net.Socket;

@@ -16,7 +16,6 @@ public class Controller extends Thread {
 
 	@Override
 	public void run() {
-		System.out.println("Controller running");
 		while (true) {
 			view.update();
 

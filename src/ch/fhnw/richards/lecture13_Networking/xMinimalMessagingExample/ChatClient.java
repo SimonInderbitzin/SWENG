@@ -7,6 +7,12 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * The client has two parallel activities. In the main thread, we read
+ * user-messages from the console and send them to the server. The second thread
+ * (the "run" method) reads messages from the server and prints them to the
+ * console.
+ */
 public class ChatClient extends Thread {
 	private BufferedReader socketIn;
 

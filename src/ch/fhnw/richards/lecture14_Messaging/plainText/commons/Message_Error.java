@@ -1,4 +1,4 @@
-package ch.fhnw.richards.lecture13_Messaging.plainText.commons;
+package ch.fhnw.richards.lecture14_Messaging.plainText.commons;
 
 import java.util.ArrayList;
 
