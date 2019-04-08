@@ -15,7 +15,7 @@ public class MouseDetector_View {
 		this.stage = stage;
 		this.model = model;
 		
-		stage.setTitle("Button Click MVC");
+		stage.setTitle("Mouse Detector");
 		
 		GridPane root = new GridPane();
 		lblDetector = new Label("This is a label");
