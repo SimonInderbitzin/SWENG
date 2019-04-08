@@ -1,4 +1,4 @@
-package ch.fhnw.richards.lecture13_Messaging.plainText.server;
+package ch.fhnw.richards.lecture14_Messaging.plainText.server;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;

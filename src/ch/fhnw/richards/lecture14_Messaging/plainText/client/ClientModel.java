@@ -1,9 +1,9 @@
-package ch.fhnw.richards.lecture13_Messaging.plainText.client;
+package ch.fhnw.richards.lecture14_Messaging.plainText.client;
 
 import java.io.IOException;
 import java.net.Socket;
 
-import ch.fhnw.richards.lecture13_Messaging.plainText.commons.*;
+import ch.fhnw.richards.lecture14_Messaging.plainText.commons.*;
 
 public class ClientModel {
     String ipAddress;

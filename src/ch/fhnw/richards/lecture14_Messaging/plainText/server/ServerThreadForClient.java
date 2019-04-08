@@ -1,10 +1,10 @@
-package ch.fhnw.richards.lecture13_Messaging.plainText.server;
+package ch.fhnw.richards.lecture14_Messaging.plainText.server;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Logger;
 
-import ch.fhnw.richards.lecture13_Messaging.plainText.commons.*;
+import ch.fhnw.richards.lecture14_Messaging.plainText.commons.*;
 
 public class ServerThreadForClient extends Thread {
     private final Logger logger = Logger.getLogger("");
