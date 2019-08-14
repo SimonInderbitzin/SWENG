@@ -1,0 +1,24 @@
+.label {
+  -fx-font-size: 20;
+  -fx-font-weight: bold;
+  -fx-text-fill: #008080;
+  -fx-border-insets: 5px;
+  -fx-min-width: 200;
+  -fx-alignment: center;
+  -fx-text-alignment: center;
+}
+
+.button {
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+  -fx-font-style: italic;
+  -fx-text-fill: #000000;
+  -fx-min-width: 200;
+}
+
+#Number {
+  -fx-border-insets: 5px;
+  -fx-border-color: black;
+  -fx-border-width: 2px;
+  -fx-max-width: 9999;
+}
