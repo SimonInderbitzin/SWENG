@@ -1,4 +1,4 @@
-package ch.fhnw.richards.lecture03_JavaFX_animation.exercise_solutions;
+package ch.fhnw.richards.topic02_JavaFX_Animation.exercise_solutions;
 
 import javafx.animation.Animation;
 import javafx.animation.FillTransition;

@@ -1,4 +1,4 @@
-package ch.fhnw.richards.lecture03_JavaFX_animation.GUI_Animation;
+package ch.fhnw.richards.topic02_JavaFX_Animation.GUI_Animation;
 
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;

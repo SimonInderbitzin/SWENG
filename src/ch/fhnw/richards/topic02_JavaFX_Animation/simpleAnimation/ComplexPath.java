@@ -1,4 +1,4 @@
-package ch.fhnw.richards.lecture03_JavaFX_animation.simpleAnimation;
+package ch.fhnw.richards.topic02_JavaFX_Animation.simpleAnimation;
 
 import javafx.animation.Animation;
 import javafx.animation.PathTransition;

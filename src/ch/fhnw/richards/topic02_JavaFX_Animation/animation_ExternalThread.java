@@ -1,4 +1,4 @@
-package ch.fhnw.richards.lecture03_JavaFX_animation;
+package ch.fhnw.richards.topic02_JavaFX_Animation;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

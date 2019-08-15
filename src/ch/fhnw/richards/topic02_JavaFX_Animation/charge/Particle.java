@@ -1,4 +1,4 @@
-package ch.fhnw.richards.lecture03_JavaFX_animation.charge;
+package ch.fhnw.richards.topic02_JavaFX_Animation.charge;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
