@@ -1,12 +1,6 @@
 package ch.fhnw.richards.topic02_JavaFX.modelPropertyExample;
 
 import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.stage.WindowEvent;
 
 public class MPE_Controller {
 	
@@ -18,7 +12,7 @@ public class MPE_Controller {
 		this.view = view;
 		
 		// register ourselves to listen for property changes in the model. Each change results in a short animation.
-		model.getValueProperty().addListener( (observable, oldValue, newValue) -> {
+		model.valueProperty().addListener( (observable, oldValue, newValue) -> {
 		        String newText = Integer.toString(model.getValue());
 		        
 		        // Move to the JavaFX thread
