@@ -22,7 +22,7 @@ public class MPE_Model {
 		sim.start();
 	}
 	
-	public SimpleIntegerProperty getValueProperty() {
+	public SimpleIntegerProperty valueProperty() {
 		return value;
 	}
 

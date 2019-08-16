@@ -2,7 +2,6 @@ package ch.fhnw.richards.topic02_JavaFX.modelPropertyExample;
 
 import javafx.animation.RotateTransition;
 import javafx.application.Platform;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
