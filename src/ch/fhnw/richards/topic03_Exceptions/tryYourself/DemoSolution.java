@@ -1,8 +1,8 @@
-package ch.fhnw.richards.topic03_Exceptions_Debugging_Testing.tryYourself;
+package ch.fhnw.richards.topic03_Exceptions.tryYourself;
 
 import java.util.Scanner;
 
-public class Demo {
+public class DemoSolution {
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
 		int choice = -1;
@@ -21,16 +21,22 @@ public class Demo {
 				case 0: // Do nothing - quitting
 					break;
 				case 1: // Use an invalid array index
-
+					int[] nums = new int[2];
+					nums[3] = 13;
 					break;
 				case 2: // Divide by zero using int-values
-
+					int x = 3;
+					int y = 0;
+					x = x / y;
 					break;
 				case 3: // Divide by zero using float-values
-
+					float u = 3;
+					float v = 0;
+					u = u / v;
 					break;
 				case 4: // Try to use a null pointer
-
+					Object o = null;
+					o.toString();
 					break;
 				case 5: // Something else
 
