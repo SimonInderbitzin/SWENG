@@ -1,4 +1,4 @@
-package ch.fhnw.richards.lecture04.identityExamples;
+package ch.fhnw.richards.topic04_ClassDesign.identityExamples;
 
 public class MyClassInt implements Comparable<MyClassInt> {
 	private final int idAttr;

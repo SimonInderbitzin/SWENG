@@ -1,4 +1,4 @@
-package ch.fhnw.richards.lecture04.identityExamples;
+package ch.fhnw.richards.topic04_ClassDesign.identityExamples;
 
 /**
  * This class uses a String as an identity attribute. We implement .equals,

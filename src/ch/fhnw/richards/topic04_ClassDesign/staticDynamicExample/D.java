@@ -1,4 +1,4 @@
-package ch.fhnw.richards.lecture04.staticDynamicExample;
+package ch.fhnw.richards.topic04_ClassDesign.staticDynamicExample;
 
 public class D  extends C {
 	  void f() { System.out.println("D::f"); super.f(); }
