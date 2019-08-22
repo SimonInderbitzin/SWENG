@@ -1,4 +1,4 @@
-package ch.fhnw.richards.lecture06_Collections;
+package ch.fhnw.richards.topic05_DataStructures.iteratorDemo;
 import java.util.ArrayList;
 
 /**

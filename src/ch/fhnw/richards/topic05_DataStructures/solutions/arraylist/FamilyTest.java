@@ -1,10 +1,10 @@
-package ch.fhnw.richards.lecture06_Collections.solutions.arraylist;
+package ch.fhnw.richards.topic05_DataStructures.solutions.arraylist;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import ch.fhnw.richards.lecture06_Collections.jUnit_Demo.Person;
+import ch.fhnw.richards.topic05_DataStructures.solutions.Person;
 
 public class FamilyTest {
 	private Person fred = new Person("Fred", 1.81, 80);

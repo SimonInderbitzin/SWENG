@@ -1,29 +1,15 @@
-package ch.fhnw.richards.lecture06_Collections.solutions.treeset;
+package ch.fhnw.richards.topic05_DataStructures.solutions.hashmap;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import ch.fhnw.richards.topic05_DataStructures.solutions.Person;
 
 public class FamilyTest {
 	private Person fred = new Person("Fred", 1.81, 80);
-	private Person fred2 = new Person(fred.getID(), "Fred2", 1.81, 80);
+	private Person fred2 = new Person("Fred", 1.55, 65);
 	private Person ann = new Person("Ann", 1.6, 55);
 	private Person john = new Person("John", 1.9, 95);
-
-	@Test
-	public void testSorting() {
-		Family family = new Family();
-		family.add(ann);
-		family.add(john);
-		family.add(fred);
-		
-		int previousID = -1;
-		for (Person p : family.getAllMembers()) {
-			int thisID = p.getID();
-			assertTrue(previousID < thisID);
-			previousID = thisID;
-		}
-	}
 	
 	@Test
 	public void testInitialSize() {
@@ -38,8 +24,9 @@ public class FamilyTest {
 		family.add(fred);
 		assertEquals(1, family.size());
 		
-		family.add(fred2); // Should not be added !!
+		family.add(fred2); // Overwrites the first "Fred" !!
 		assertEquals(1, family.size()); // Still size 1
+		assertEquals(family.getTallest().getHeight(), 1.55f, 0.01); // Height of fred2
 	}
 
 	@Test

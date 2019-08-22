@@ -1,6 +1,4 @@
-package ch.fhnw.richards.lecture06_Collections.familyArrayExample;
-
-import ch.fhnw.richards.lecture06_Collections.jUnit_Demo.Person;
+package ch.fhnw.richards.topic05_DataStructures.familyArrayExample;
 
 /**
  * This class may contains errors!

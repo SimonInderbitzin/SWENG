@@ -1,13 +1,15 @@
-package ch.fhnw.richards.lecture06_Collections.solutions.treeset;
+package ch.fhnw.richards.topic05_DataStructures.solutions.arraylist;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.TreeSet;
+
+import ch.fhnw.richards.topic05_DataStructures.solutions.Person;
 
 public class Family {
-	private TreeSet<Person> members;
+	private ArrayList<Person> members;
 	
 	public Family() {
-		members = new TreeSet<>();
+		members = new ArrayList<>();
 	}
 	
 	public int size() {
@@ -29,12 +31,13 @@ public class Family {
 	}
 	
 	public boolean isMember(Person p) {
-		for (Person m : members) {
-			if (m.equals(p)) {
-				return true;
+		boolean isMember = false;
+		for (int i = 0; i < members.size() & !isMember; i++) {
+			if (members.get(i).equals(p)) {
+				isMember = true;
 			}
 		}
-		return false;
+		return isMember;
 	}
 	
 	public Collection<Person> getAllMembers() {

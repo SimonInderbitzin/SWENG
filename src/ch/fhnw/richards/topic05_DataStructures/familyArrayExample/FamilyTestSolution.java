@@ -1,16 +1,10 @@
-package ch.fhnw.richards.lecture06_Collections.familyArrayExample;
+package ch.fhnw.richards.topic05_DataStructures.familyArrayExample;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import ch.fhnw.richards.lecture06_Collections.jUnit_Demo.Person;
-
-/**
- * This class is not complete. It should test all
- * important aspects of the Family class
- */
-public class FamilyTest {
+public class FamilyTestSolution {
 	private Person fred = new Person("Fred", 1.81, 80);
 	private Person ann = new Person("Ann", 1.6, 55);
 	private Person john = new Person("John", 1.9, 95);
@@ -38,5 +32,20 @@ public class FamilyTest {
 		assertFalse(family.isMember(ann)); // But Ann is not
 	}
 
-	// And lots more possible tests...
+	@Test
+	public void testTallest() {
+		Family family = new Family(5);
+		
+		family.add(fred);
+		Person p = family.getTallest();
+		assertEquals(p, fred);
+		
+		family.add(ann);
+		p = family.getTallest();
+		assertEquals(p, fred);
+		
+		family.add(john);
+		p = family.getTallest();
+		assertEquals(p, john);
+	}
 }
